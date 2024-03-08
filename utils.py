@@ -4,6 +4,9 @@ import numpy as np
 def equalize_hist(channel, bins):
     """
     Based on https://docs.opencv.org/4.9.0/d4/d1b/tutorial_histogram_equalization.html
+
+    :param channel: The channel to be equalized
+    :param bins: The number of bins to be used in the histogram (number of possible values for the channel)
     """
     hist = np.zeros(bins)
     for val in channel.flatten():
@@ -30,9 +33,11 @@ def gamma_correction(channel, gamma, max_value):
     """
     Based on https://docs.opencv.org/4.9.0/d3/dc1/tutorial_basic_linear_transform.html
 
-    When gamma < 1, the original dark regions will be brighter
-    and the histogram will be shifted to the right whereas it
-    will be the opposite with gamma > 1.
+    :param channel: The channel to be corrected
+    :param gamma: The gamma value. When gamma < 1, the original dark
+    regions will be brighter and the histogram will be shifted to
+    the right whereas it will be the opposite with gamma > 1.
+    :param max_value: The maximum value of the channel
     """
     channel = channel / max_value
 
