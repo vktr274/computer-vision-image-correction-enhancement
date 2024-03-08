@@ -24,3 +24,19 @@ def equalize_hist(channel, bins):
             equalized_channel[i, j] = cdf[channel[i, j]]
 
     return equalized_channel
+
+
+def gamma_correction(channel, gamma, max_value):
+    """
+    Based on https://docs.opencv.org/4.9.0/d3/dc1/tutorial_basic_linear_transform.html
+
+    When gamma < 1, the original dark regions will be brighter
+    and the histogram will be shifted to the right whereas it
+    will be the opposite with gamma > 1.
+    """
+    channel = channel / max_value
+
+    corrected_channel = np.power(channel, gamma)
+    corrected_channel = corrected_channel * max_value
+
+    return corrected_channel.astype(np.uint8)
