@@ -1,4 +1,5 @@
 import numpy as np
+import cv2
 
 
 def equalize_hist(channel, bins):
@@ -45,3 +46,29 @@ def gamma_correction(channel, gamma, max_value):
     corrected_channel = corrected_channel * max_value
 
     return corrected_channel.astype(np.uint8)
+
+
+def correct_images(images, gamma, max_vals):
+    images_eq = []
+    images_eq_gamma_corrected = []
+
+    for img in images:
+        channels = cv2.split(img)
+
+        img_equalized = []
+        img_eq_gamma_corrected = []
+
+        for channel, max_val in zip(channels, max_vals):
+            ch_equalized = equalize_hist(channel, max_val + 1)
+            ch_eq_gamma_corrected = gamma_correction(ch_equalized, gamma, max_val)
+
+            img_equalized.append(ch_equalized)
+            img_eq_gamma_corrected.append(ch_eq_gamma_corrected)
+
+        img_equalized = cv2.merge(img_equalized)
+        img_eq_gamma_corrected = cv2.merge(img_eq_gamma_corrected)
+
+        images_eq.append(img_equalized)
+        images_eq_gamma_corrected.append(img_eq_gamma_corrected)
+
+    return images_eq, images_eq_gamma_corrected
