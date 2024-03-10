@@ -111,17 +111,15 @@ def change_images_cdf(images, target_cdfs):
         img_changed_cdf = []
 
         for channel, target_cdf in zip(channels, target_cdfs):
-            # channel_cdf = get_cdf(channel, bins=target_cdf.shape[0])
-            new_channel = np.zeros(channel.shape, dtype=np.uint8)
-
-            for i in range(channel.shape[0]):
-                for j in range(channel.shape[1]):
-                    new_channel[i, j] = target_cdf[channel[i, j]]
-
+            channel_cdf = get_cdf(channel, bins=target_cdf.shape[0])
+            # interpolate between the original CDF and the target CDF
+            mapping = np.interp(
+                channel_cdf, target_cdf, np.arange(target_cdf.shape[0])
+            ).astype(np.uint8)
+            new_channel = mapping[channel]
             img_changed_cdf.append(new_channel)
 
         img_changed_cdf = cv2.merge(img_changed_cdf)
-
         images_changed_cdf.append(img_changed_cdf)
 
     return images_changed_cdf
