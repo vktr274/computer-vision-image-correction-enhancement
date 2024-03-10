@@ -123,3 +123,10 @@ def change_images_cdf(images, target_cdfs):
         images_changed_cdf.append(img_changed_cdf)
 
     return images_changed_cdf
+
+
+def convert_images(images, cvt_type):
+    new_images = []
+    for img in images:
+        new_images.append(cv2.cvtColor(img, cvt_type))
+    return np.array(new_images)
