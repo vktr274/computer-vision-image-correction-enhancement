@@ -9,9 +9,17 @@ The [`utils.py`](utils.py) file contains functions that are used throughout the 
 
 The experiment code and visualizations can be found in the [`experiment_1.ipynb`](experiment_1.ipynb) notebook.
 
+### Histograms of the First Image in the Dataset
+
+Column 1 | Column 2
+:---: | :---:
+![Grayscale Histogram](images/gray_hist.png) | ![RGB Histogram](images/rgb_hist.png)
+![YCrCb Histogram](images/ycrcb_hist.png) | ![HSV Histogram](images/hsv_hist.png)
+![XYZ Histogram](images/xyz_hist.png) | ![Lab Histogram](images/lab_hist.png)
+
 ### Histogram Equalization & Gamma Correction
 
-Ranges of color spaces in OpenCV for 8-bit images:
+Ranges of color spaces in OpenCV for 8-bit images ([source](https://docs.opencv.org/4.9.0/de/d25/imgproc_color_conversions.html)):
 
 - Grayscale: [0, 255]
 - RGB: [0, 255] for each channel
