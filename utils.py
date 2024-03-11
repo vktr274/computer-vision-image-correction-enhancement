@@ -41,7 +41,7 @@ def gamma_correction(channel, gamma, max_value):
     """
     Based on https://docs.opencv.org/4.9.0/d3/dc1/tutorial_basic_linear_transform.html
 
-    :param channel: The channel to be corrected
+    :param channel: The channel to be corrected.
     :param gamma: The gamma value. When gamma < 1, the original dark
     regions will be brighter and the histogram will be shifted to
     the right whereas it will be the opposite with gamma > 1.
@@ -60,6 +60,15 @@ def gamma_correction(channel, gamma, max_value):
 
 
 def correct_images(images, gamma, max_vals):
+    """
+    Correct the images using histogram equalization and gamma correction.
+
+    :param images: The images to be corrected.
+    :param gamma: The gamma value. When gamma < 1, the original dark
+    regions will be brighter and the histogram will be shifted to
+    the right whereas it will be the opposite with gamma > 1.
+    :param max_vals: The maximum value of each channel of the images. E.g. [255, 255, 255] for RGB images or [180, 255, 255] for HSV images.
+    """
     images_eq = []
     images_eq_gamma_corrected = []
 
@@ -86,6 +95,12 @@ def correct_images(images, gamma, max_vals):
 
 
 def get_cdf(channel, bins=256):
+    """
+    Calculate the cumulative distribution function (CDF) of a channel.
+
+    :param channel: The channel to get the CDF from.
+    :param bins: The number of bins to be used in the histogram (number of possible values for the channel)
+    """
     hist = np.zeros(bins)
     for val in channel.flatten():
         hist[val] += 1
@@ -103,6 +118,12 @@ def get_cdf(channel, bins=256):
 
 
 def change_images_cdf(images, target_cdfs):
+    """
+    Change the CDF of the images to match the target CDFs.
+
+    :param images: The images to be changed.
+    :param target_cdfs: The target CDFs to be matched. E.g. [cdf1, cdf2, cdf3] for 3 channel images.
+    """
     images_changed_cdf = []
 
     for img in images:
@@ -126,6 +147,9 @@ def change_images_cdf(images, target_cdfs):
 
 
 def convert_images(images, cvt_type):
+    """
+    Helper function to convert multiple images to a different color space.
+    """
     new_images = []
     for img in images:
         new_images.append(cv2.cvtColor(img, cvt_type))
