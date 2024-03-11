@@ -84,11 +84,13 @@ xyz_images_eq, xyz_images_eq_gamma = correct_images(xyz_images, 0.6, [255, 255, 
 lab_images_eq, lab_images_eq_gamma = correct_images(lab_images, 0.6, [255, 255, 255])
 ```
 
-These were then converted back to the RGB color space and then we visualized the results for two images from each color space:
+These were then converted back to the RGB color space and then we visualized the results for 3 images from each color space:
 
 ![Comparison of Images Equalized and Gamma Corrected in Different Color Spaces](images/every_color_space_1.png)
 
 ![Comparison of Images Equalized and Gamma Corrected in Different Color Spaces](images/every_color_space_2.png)
+
+![Comparison of Images Equalized and Gamma Corrected in Different Color Spaces](images/every_color_space_3.png)
 
 ### Source to Target Color Correction using eCDF
 
