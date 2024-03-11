@@ -3,11 +3,11 @@
 Viktor Modroczký\
 Computer Vision @ FIIT STU
 
-The `utils.py` file contains functions that are used throughout the experiment notebooks.
+The [`utils.py`](utils.py) file contains functions that are used throughout the experiment notebooks. Each function is documented with a docstring that explains its purpose and usage.
 
 ## Experiment 1 - Image Correction
 
-The experiment code and visualizations can be found in the `experiment_1.ipynb` notebook.
+The experiment code and visualizations can be found in the [`experiment_1.ipynb`](experiment_1.ipynb) notebook.
 
 ### Histogram Equalization & Gamma Correction
 
@@ -20,7 +20,7 @@ Ranges of color spaces in OpenCV for 8-bit images:
 - XYZ: [0, 255] for each channel
 - Lab: [0, 255] for each channel
 
-These ranges need to be taken into consideration when performing histogram equalization. To perform histogram equalization on an image, each channel needs to be equalized separately. To equalize a channel, we use the `equalize_hist` function from the `utils.py` file. To correct the gamma of an image, we use the `gamma_correction` function from the `utils.py` file. Both functions are based on OpenCV tutorials ([for histogram equalization](https://docs.opencv.org/4.9.0/d4/d1b/tutorial_histogram_equalization.html) and [for gamma correction](https://docs.opencv.org/4.9.0/d3/dc1/tutorial_basic_linear_transform.html)). Both are also documented in the `utils.py` file in their respective docstrings.
+These ranges need to be taken into consideration when performing histogram equalization. To perform histogram equalization on an image, each channel needs to be equalized separately. To equalize a channel, we use the `equalize_hist` function from the `utils.py` file. To correct the gamma of an image, we use the `gamma_correction` function from the `utils.py` file. Both functions are based on OpenCV tutorials ([for histogram equalization](https://docs.opencv.org/4.9.0/d4/d1b/tutorial_histogram_equalization.html) and [for gamma correction](https://docs.opencv.org/4.9.0/d3/dc1/tutorial_basic_linear_transform.html)).
 
 The `correct_images` function in the `utils.py` file is used to apply both histogram equalization and gamma correction to an array of images, which we use to apply these corrections to images in each color space (except for the grayscale color space, where we only apply histogram equalization and gamma correction to one image).
 
@@ -117,4 +117,4 @@ The YCrCb images were then converted back to the RGB color space. The results fo
 
 ## Experiment 2 - Image Enhancement
 
-The experiment code and visualizations can be found in the `experiment_2.ipynb` notebook.
+The experiment code and visualizations can be found in the [`experiment_2.ipynb`](experiment_2.ipynb) notebook.
