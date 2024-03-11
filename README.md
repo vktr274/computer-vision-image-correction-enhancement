@@ -105,9 +105,13 @@ cdf_corrected_ycrcb_images = change_images_cdf(ycrcb_images, [target_cdf_y, targ
 
 where `target_cdf_r`, `target_cdf_g`, and `target_cdf_b` are the cumulative distribution functions of the R, G, and B channels of the target image, and `target_cdf_y`, `target_cdf_cr`, and `target_cdf_cb` are the cumulative distribution functions of the Y, Cr, and Cb channels of the target image. These were calculated using the `get_cdf` function.
 
-The YCrCb images were then converted back to the RGB color space. The results for every image in the dataset are visualized below:
+The YCrCb images were then converted back to the RGB color space. The results for every image in the dataset are visualized below.
+
+**Images Corrected using eCDF in the RGB Color Space:**
 
 ![CDF Corrected RGB Images](images/cdf_corrected_rgb.png)
+
+**Images Corrected using eCDF in the YCrCb Color Space:**
 
 ![CDF Corrected YCrCb Images](images/cdf_corrected_ycrcb.png)
 
