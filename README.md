@@ -147,7 +147,7 @@ The YCrCb images were then converted back to the RGB color space. The results fo
 
 The experiment code and visualizations can be found in the [`experiment_2.ipynb`](experiment_2.ipynb) notebook.
 
-To select one cell we used a click event in OpenCV to get the coordinates of the mouse click. Then we selected an area around the clicked point with a radius of 10 pixels. Then we calculated the mean L, a, and b values of the Lab color space in the selected area. Then we created a grayscale delta image where each pixel value is `delta_E = np.sqrt(delta_L**2 + delta_a**2 + delta_b**2)`. The following code was used to calculate the delta image:
+To select one nucleus we used a click event in OpenCV to get the coordinates of the mouse click. Then we selected an area around the clicked point with a radius of 10 pixels. Then we calculated the mean L, a, and b values of the Lab color space in the selected area. Then we created a grayscale delta image where each pixel value is `delta_E = np.sqrt(delta_L**2 + delta_a**2 + delta_b**2)`. The following code was used to calculate the delta image:
 
 ```python
 delta_lab = np.zeros((lab_img.shape[0], lab_img.shape[1]), dtype=np.uint8)
@@ -168,3 +168,5 @@ The following are the original grayscale image and the delta image:
 Next we used a Gaussian filter with a kernel size of 7 and $\sigma = 0$ to smooth both the original grayscale image and the delta image. After that we performed Otzu's thresholding on the smoothed images and compared the results.
 
 ![Original Grayscale and Delta Image Thresholding](images/orig_vs_delta_otzu.png)
+
+We can see better separation of the nuclei from each other in the delta image.
