@@ -169,4 +169,4 @@ Next we used a Gaussian filter with a kernel size of 7 and $\sigma = 0$ to smoot
 
 ![Original Grayscale and Delta Image Thresholding](images/orig_vs_delta_otsu.png)
 
-We can see better separation of the nuclei from each other in the delta image.
+We can see better separation of the nuclei from each other in the binary image created from the delta image.
