@@ -17,7 +17,7 @@ Column 1 | Column 2
 ![YCrCb Histogram](images/ycrcb_hist.png) | ![HSV Histogram](images/hsv_hist.png)
 ![XYZ Histogram](images/xyz_hist.png) | ![Lab Histogram](images/lab_hist.png)
 
-### Histogram Equalization & Gamma Correction
+### Histogram Equalization
 
 Ranges of color spaces in OpenCV for 8-bit images ([source](https://docs.opencv.org/4.9.0/de/d25/imgproc_color_conversions.html)):
 
@@ -30,7 +30,7 @@ Ranges of color spaces in OpenCV for 8-bit images ([source](https://docs.opencv.
 
 These ranges need to be taken into consideration when performing histogram equalization. To perform histogram equalization on an image, each channel needs to be equalized separately. To equalize a channel, we use the `equalize_hist` function from the `utils.py` file. To correct the gamma of an image, we use the `gamma_correction` function from the `utils.py` file. Both functions are based on OpenCV tutorials ([for histogram equalization](https://docs.opencv.org/4.9.0/d4/d1b/tutorial_histogram_equalization.html) and [for gamma correction](https://docs.opencv.org/4.9.0/d3/dc1/tutorial_basic_linear_transform.html)).
 
-The `correct_images` function in the `utils.py` file is used to apply both histogram equalization and gamma correction to an array of images, which we use to apply these corrections to images in each color space (except for the grayscale color space, where we only apply histogram equalization and gamma correction to one image).
+The `correct_images` function in the `utils.py` file is used to apply histogram equalization to an array of images. We use this function on images in each color space (except for the grayscale color space, where we only apply histogram equalization to one image).
 
 #### Grayscale
 
@@ -43,37 +43,33 @@ img_eq_gamma_corrected = gamma_correction(img_equalized, 0.6, 255)
 
 **Results:**
 
-The following images show the original grayscale image, the equalized grayscale image, and the gamma-corrected equalized grayscale image.
+The following images show the original grayscale image and the equalized grayscale image.
 
 ![Grayscale Images](images/grayscale_images.png)
 
-The following histograms show histograms of the original grayscale image, the equalized grayscale image, and the gamma-corrected equalized grayscale image.
+The following histograms show histograms of the original grayscale image and the equalized grayscale image.
 
 ![Grayscale Histograms](images/grayscale_histograms.png)
 
 #### RGB
 
-An RGB image has three channels, so both histogram equalization and gamma correction are applied to each channel separately. To equalize histograms and correct the gamma of each RGB image, we ran the following code:
+An RGB image has three channels, so histogram equalization is applied to each channel separately. To equalize histograms of each RGB image, we ran the following code:
 
 ```python
-rgb_images_eq, rgb_images_eq_gamma = correct_images(rgb_images, 0.6, [255, 255, 255])
+rgb_images_eq = correct_images(rgb_images, [255, 255, 255])
 ```
 
-**Comparison of one of the original RGB images with its equalized and gamma-corrected versions:**
+**Comparison of one of the original RGB images with its equalized version:**
 
 ![Comparison of RGB Images](images/rgb_image_comparison.png)
 
-**Comparison of histograms of one of the original RGB images with its equalized and gamma-corrected versions:**
+**Comparison of histograms of one of the original RGB images with its equalized version:**
 
 ![Comparison of RGB Histograms](images/rgb_histograms_comparison.png)
 
 **Every equalized RGB image:**
 
 ![Equalized RGB Images](images/every_rgb_img_equalized.png)
-
-**Every gamma-corrected equalized RGB image:**
-
-![Gamma-Corrected Equalized RGB Images](images/every_rgb_image_equalized_gamma_corrected.png)
 
 **Every original RGB image:**
 
@@ -86,19 +82,43 @@ The same process as for the RGB color space was applied to the YCrCb, HSV, XYZ, 
 The following code was used to equalize histograms and correct the gamma of each image in the YCrCb, HSV, XYZ, and Lab color spaces:
 
 ```python
-ycrcb_images_eq, ycrcb_images_eq_gamma = correct_images(ycrcb_images, 0.6, [255, 255, 255])
-hsv_images_eq, hsv_images_eq_gamma = correct_images(hsv_images, 0.6, [180, 255, 255])
-xyz_images_eq, xyz_images_eq_gamma = correct_images(xyz_images, 0.6, [255, 255, 255])
-lab_images_eq, lab_images_eq_gamma = correct_images(lab_images, 0.6, [255, 255, 255])
+ycrcb_images_eq = correct_images(ycrcb_images, [255, 255, 255])
+hsv_images_eq = correct_images(hsv_images, [180, 255, 255])
+xyz_images_eq = correct_images(xyz_images, [255, 255, 255])
+lab_images_eq = correct_images(lab_images, [255, 255, 255])
 ```
 
-These were then converted back to the RGB color space and then we visualized the results for 3 images from each color space:
+These were then converted back to the RGB color space and then we visualized the results for each images from each color space:
 
-![Comparison of Images Equalized and Gamma Corrected in Different Color Spaces](images/every_color_space_1.png)
+![Comparison of Images Equalized in Different Color Spaces](images/every_color_space_1.png)
 
-![Comparison of Images Equalized and Gamma Corrected in Different Color Spaces](images/every_color_space_2.png)
+![Comparison of Images Equalized in Different Color Spaces](images/every_color_space_2.png)
 
-![Comparison of Images Equalized and Gamma Corrected in Different Color Spaces](images/every_color_space_3.png)
+![Comparison of Images Equalized in Different Color Spaces](images/every_color_space_3.png)
+
+![Comparison of Images Equalized in Different Color Spaces](images/every_color_space_4.png)
+
+![Comparison of Images Equalized in Different Color Spaces](images/every_color_space_5.png)
+
+![Comparison of Images Equalized in Different Color Spaces](images/every_color_space_6.png)
+
+However, it is better to only equalize the brightness channels of color spaces that have such a channel. From the YCrCb it is the Y channel, from the HSV it is the V channel, from the XYZ it is the Y channel, and from the Lab it is the L channel. The following are the results of equalizing only the brightness channels of the images:
+
+![YCrCb only Y channel equalized](images/ycrcb_only_y.png)
+
+![HSV only V channel equalized](images/hsv_only_v.png)
+
+![XYZ only Y channel equalized](images/xyz_only_y.png)
+
+![Lab only L channel equalized](images/lab_only_l.png)
+
+### Gamma Correction on RGB Images
+
+We tried to correct the gamma of one of the original RGB images and then visualize the results. We used 5 different gamma values: 0.5, 0.8, 1.2, 1.8, and 2.5.
+
+![Gamma Correction on RGB Images](images/rgb_gammas.png)
+
+We can see that values less than 1 make the image overall brighter, and values greater than 1 make the image overall darker.
 
 ### Source to Target Color Correction using eCDF
 
@@ -107,8 +127,8 @@ For the purpose of this task we created the following function in the `utils.py`
 The following code was used to perform color correction for the images:
 
 ```python
-cdf_corrected_rgb_images = change_images_cdf(rgb_images, [target_cdf_r, target_cdf_g, target_cdf_b])
-cdf_corrected_ycrcb_images = change_images_cdf(ycrcb_images, [target_cdf_y, target_cdf_cr, target_cdf_cb])
+cdf_corrected_rgb_images = change_images_cdf(rgb_images[1:], [target_cdf_r, target_cdf_g, target_cdf_b])
+cdf_corrected_ycrcb_images = change_images_cdf(ycrcb_images[1:], [target_cdf_y, target_cdf_cr, target_cdf_cb])
 ```
 
 where `target_cdf_r`, `target_cdf_g`, and `target_cdf_b` are the cumulative distribution functions of the R, G, and B channels of the target image, and `target_cdf_y`, `target_cdf_cr`, and `target_cdf_cb` are the cumulative distribution functions of the Y, Cr, and Cb channels of the target image. These were calculated using the `get_cdf` function.
