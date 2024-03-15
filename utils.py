@@ -37,34 +37,39 @@ def equalize_hist(channel, bins):
     return equalized_channel
 
 
-def gamma_correction(channel, gamma, max_value):
+def gamma_correction(img, gamma, max_values):
     """
     Based on https://docs.opencv.org/4.9.0/d3/dc1/tutorial_basic_linear_transform.html
 
-    :param channel: The channel to be corrected.
+    :param img: The image to be corrected.
     :param gamma: The gamma value. When gamma < 1, the original dark
     regions will be brighter and the histogram will be shifted to
     the right whereas it will be the opposite with gamma > 1.
-    :param max_value: The maximum value of the channel
+    :param max_values: The maximum value of each channel of the image.
+    E.g. [255, 255, 255] for RGB images or [180, 255, 255] for HSV images.
     """
-    # Normalize the channel so that the maximum value is 1
-    channel = channel / max_value
+    split_img = cv2.split(img)
+    corrected_img = []
 
-    # Apply the gamma correction
-    corrected_channel = np.power(channel, gamma)
+    for channel, max_value in zip(split_img, max_values):
+        # Normalize the channel so that the maximum value is 1
+        corrected_channel = channel / max_value
+        # Apply the gamma correction
+        corrected_channel = np.power(corrected_channel, gamma)
+        # Change the channel back to the original range
+        corrected_channel = corrected_channel * max_value
+        corrected_img.append(corrected_channel.astype(np.uint8))
 
-    # Change the channel back to the original range
-    corrected_channel = corrected_channel * max_value
-
-    return corrected_channel.astype(np.uint8)
+    return cv2.merge(corrected_img)
 
 
 def correct_images(images, max_vals):
     """
-    Correct the images using histogram equalization and gamma correction.
+    Correct the images in an array using histogram equalization.
 
     :param images: The images to be corrected.
-    :param max_vals: The maximum value of each channel of the images. E.g. [255, 255, 255] for RGB images or [180, 255, 255] for HSV images.
+    :param max_vals: The maximum value of each channel of the images.
+    E.g. [255, 255, 255] for RGB images or [180, 255, 255] for HSV images.
     """
     images_eq = []
 
