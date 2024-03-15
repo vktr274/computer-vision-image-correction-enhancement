@@ -165,8 +165,8 @@ The following are the original grayscale image and the delta image:
 
 ![Original Grayscale and Delta Image](images/orig_vs_delta.png)
 
-Next we used a Gaussian filter with a kernel size of 7 and $\sigma = 0$ to smooth both the original grayscale image and the delta image. After that we performed Otzu's thresholding on the smoothed images and compared the results.
+Next we used a Gaussian filter with a kernel size of 7 and $\sigma = 0$ to smooth both the original grayscale image and the delta image. After that we performed Otsu's thresholding on the smoothed images and compared the results.
 
-![Original Grayscale and Delta Image Thresholding](images/orig_vs_delta_otzu.png)
+![Original Grayscale and Delta Image Thresholding](images/orig_vs_delta_otsu.png)
 
 We can see better separation of the nuclei from each other in the delta image.
