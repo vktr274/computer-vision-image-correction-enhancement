@@ -134,7 +134,7 @@ cdf_corrected_ycrcb_images = change_images_cdf(ycrcb_images[1:], [target_cdf_y, 
 
 where `target_cdf_r`, `target_cdf_g`, and `target_cdf_b` are the cumulative distribution functions of the R, G, and B channels of the target image, and `target_cdf_y`, `target_cdf_cr`, and `target_cdf_cb` are the cumulative distribution functions of the Y, Cr, and Cb channels of the target image. These were calculated using the `get_cdf` function.
 
-To match CDFs of channels, we used the following code:
+To match CDFs of channels, we used the following code that creates a mapping from the source CDF to the target CDF and then applies the mapping to the source channel:
 
 ```python
 mapping = np.interp(
