@@ -30,15 +30,14 @@ Ranges of color spaces in OpenCV for 8-bit images ([source](https://docs.opencv.
 
 These ranges need to be taken into consideration when performing histogram equalization. To perform histogram equalization on an image, each channel needs to be equalized separately. To equalize a channel, we use the `equalize_hist` function from the `utils.py` file. To correct the gamma of an image, we use the `gamma_correction` function from the `utils.py` file. Both functions are based on OpenCV tutorials ([for histogram equalization](https://docs.opencv.org/4.9.0/d4/d1b/tutorial_histogram_equalization.html) and [for gamma correction](https://docs.opencv.org/4.9.0/d3/dc1/tutorial_basic_linear_transform.html)).
 
-The `correct_images` function in the `utils.py` file is used to apply histogram equalization to an array of images. We use this function on images in each color space (except for the grayscale color space, where we only apply histogram equalization to one image).
+The `correct_images` function in the `utils.py` file is used to apply histogram equalization to an array of images. We use this function on each image in each color space (except for the grayscale color space, where we only apply histogram equalization to one image).
 
 #### Grayscale
 
-A grayscale image only has a single channel, so both histogram equalization and gamma correction are only applied to one channel. We ran the following code to equalize the histogram of only one grayscale image and then correct its gamma:
+A grayscale image only has a single channel, so both histogram equalization is only applied to one channel. We ran the following code to equalize the histogram of only one grayscale image:
 
 ```python
 img_equalized = equalize_hist(img, 256)
-img_eq_gamma_corrected = gamma_correction(img_equalized, 0.6, 255)
 ```
 
 **Results:**
@@ -112,6 +111,8 @@ However, it is better to only equalize the brightness channels of color spaces t
 
 ![Lab only L channel equalized](images/lab_only_l.png)
 
+The best results were achieved by equalizing L channel in the Lab color space and the Y channel in the YCrCb color space. Equalizing the V channel in the HSV color space produced images that were not uniform in brightness. Equalizing the Y channel in the XYZ color space did not produce good results.
+
 ### Gamma Correction on RGB Images
 
 We tried to correct the gamma of one of the original RGB images and then visualize the results. We used 5 different gamma values: 0.5, 0.8, 1.2, 1.8, and 2.5.
@@ -122,7 +123,7 @@ We can see that values less than 1 make the image overall brighter, and values g
 
 ### Source to Target Color Correction using eCDF
 
-For the purpose of this task we created the following function in the `utils.py` file: `get_cdf` and `change_images_cdf`. The `get_cdf` function calculates the cumulative distribution function of a channel in an image. The `change_images_cdf` function performs color correction for multiple images (sources) to match the colors of another image (target).
+For the purpose of this task we created the following functions in the `utils.py` file: `get_cdf` and `change_images_cdf`. The `get_cdf` function calculates the cumulative distribution function of a channel in an image. The `change_images_cdf` function performs color correction for multiple images (sources) to match the colors of another image (target).
 
 The following code was used to perform color correction for the images:
 
@@ -132,6 +133,15 @@ cdf_corrected_ycrcb_images = change_images_cdf(ycrcb_images[1:], [target_cdf_y, 
 ```
 
 where `target_cdf_r`, `target_cdf_g`, and `target_cdf_b` are the cumulative distribution functions of the R, G, and B channels of the target image, and `target_cdf_y`, `target_cdf_cr`, and `target_cdf_cb` are the cumulative distribution functions of the Y, Cr, and Cb channels of the target image. These were calculated using the `get_cdf` function.
+
+To match CDFs of channels, we used the following code:
+
+```python
+mapping = np.interp(
+    channel_cdf, target_cdf, np.arange(target_cdf.shape[0])
+).astype(np.uint8)
+new_channel = mapping[channel]
+```
 
 The YCrCb images were then converted back to the RGB color space. The results for every image in the dataset are visualized below.
 

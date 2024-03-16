@@ -9,24 +9,7 @@ def equalize_hist(channel, bins):
     :param channel: The channel to be equalized
     :param bins: The number of bins to be used in the histogram (number of possible values for the channel)
     """
-    hist = np.zeros(bins)
-    for val in channel.flatten():
-        hist[val] += 1
-
-    # Normalize the histogram so that the sum of all bins is 1
-    hist = hist / (channel.shape[0] * channel.shape[1])
-
-    # Create the cumulative distribution function
-    cdf = np.zeros(bins)
-    cdf[0] = hist[0]
-
-    for i in range(1, bins):
-        cdf[i] = cdf[i - 1] + hist[i]
-
-    # Normalize the CDF so that the maximum value is
-    # the maximum possible value for the channel
-    cdf = cdf * (bins - 1)
-
+    cdf = get_cdf(channel, bins)
     equalized_channel = np.zeros(channel.shape, dtype=np.uint8)
 
     # Map the original values to the ones in the CDF
@@ -99,14 +82,19 @@ def get_cdf(channel, bins=256):
     hist = np.zeros(bins)
     for val in channel.flatten():
         hist[val] += 1
+
+    # Normalize the histogram so that the sum of all bins is 1
     hist = hist / (channel.shape[0] * channel.shape[1])
 
+    # Create the cumulative distribution function
     cdf = np.zeros(bins)
     cdf[0] = hist[0]
 
     for i in range(1, bins):
         cdf[i] = cdf[i - 1] + hist[i]
 
+    # Normalize the CDF so that the maximum value is
+    # the maximum possible value for the channel
     cdf = cdf * (bins - 1)
 
     return cdf.astype(np.uint8)
