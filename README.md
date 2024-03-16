@@ -157,7 +157,11 @@ The YCrCb images were then converted back to the RGB color space. The results fo
 
 The experiment code and visualizations can be found in the [`experiment_2.ipynb`](experiment_2.ipynb) notebook.
 
-To select one nucleus we used a click event in OpenCV to get the coordinates of the mouse click. Then we selected an area around the clicked point with a radius of 10 pixels. Then we calculated the mean L, a, and b values of the Lab color space in the selected area. Then we created a grayscale delta image where each pixel value is `delta_E = np.sqrt(delta_L**2 + delta_a**2 + delta_b**2)`. The following code was used to calculate the delta image:
+To select one nucleus we used a click event in OpenCV to get the coordinates of the mouse click. Then we selected an area around the clicked point with a radius of 10 pixels. The following image shows the selected nucleus area in RGB for visualization purposes:
+
+![Selected Nucleus](images/nucleus_zoomed.png)
+
+Then we calculated the mean L, a, and b values of the Lab color space in the selected area. Then we created a grayscale delta image where each pixel value is `delta_E = np.sqrt(delta_L**2 + delta_a**2 + delta_b**2)`. The following code was used to calculate the delta image:
 
 ```python
 delta_lab = np.zeros((lab_img.shape[0], lab_img.shape[1]), dtype=np.uint8)
