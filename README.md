@@ -101,7 +101,7 @@ These were then converted back to the RGB color space and then we visualized the
 
 ![Comparison of Images Equalized in Different Color Spaces](images/every_color_space_6.png)
 
-However, it is better to only equalize the brightness channels of color spaces that have such a channel. From the YCrCb it is the Y channel, from the HSV it is the V channel, from the XYZ it is the Y channel, and from the Lab it is the L channel. The following are the results of equalizing only the brightness channels of the images:
+However, it is better to only equalize the brightness channels of color spaces that have such a channel. From YCrCb it is the Y channel, from HSV it is the V channel, from XYZ it is the Y channel, and from Lab it is the L channel. The following are the results of equalizing only the brightness channels of the images:
 
 ![YCrCb only Y channel equalized](images/ycrcb_only_y.png)
 
