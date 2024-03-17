@@ -157,11 +157,13 @@ The YCrCb images were then converted back to the RGB color space. The results fo
 
 The experiment code and visualizations can be found in the [`experiment_2.ipynb`](experiment_2.ipynb) notebook.
 
-To select one nucleus we used a click event in OpenCV to get the coordinates of the mouse click. Then we selected an area around the clicked point with a radius of 10 pixels. The following image shows the selected nucleus area in RGB for visualization purposes:
+To select one nucleus we used a click event in OpenCV to get the coordinates of the mouse click. Then we selected an area around the clicked point with a radius of 40 pixels. Then we performed Otsu thresholding on this area in the grayscale color space. In case of multiple contours in the thresholded image, we selected the contour with the largest area. Then we used the `cv2.fillPoly` function to fill the selected contour with white color to create a mask.
 
-![Selected Nucleus](images/nucleus_zoomed.png)
+The following image shows the mask and selected nucleus area in RGB for visualization purposes:
 
-Then we calculated the mean L, a, and b values of the Lab color space in the selected area. Then we created a grayscale delta image where each pixel value is `delta_E = np.sqrt(delta_L**2 + delta_a**2 + delta_b**2)`. The following code was used to calculate the delta image:
+![Selected Nucleus](images/mask_contour.png)
+
+Then we calculated the mean L, a, and b values of the Lab color space in the selected area where the mask contains ones. Then we created a grayscale delta image where each pixel value is `delta_E = np.sqrt(delta_L**2 + delta_a**2 + delta_b**2)`. The following code was used to calculate the delta image:
 
 ```python
 delta_lab = np.zeros((lab_img.shape[0], lab_img.shape[1]), dtype=np.uint8)
@@ -179,8 +181,10 @@ The following are the original grayscale image and the delta image:
 
 ![Original Grayscale and Delta Image](images/orig_vs_delta.png)
 
+We can see higher contrast between the nuclei and the background in the delta image.
+
 Next we used a Gaussian filter with a kernel size of 7 and $\sigma = 0$ to smooth both the original grayscale image and the delta image. After that we performed Otsu's thresholding on the smoothed images and compared the results.
 
 ![Original Grayscale and Delta Image Thresholding](images/orig_vs_delta_otsu.png)
 
-We can see better separation of the nuclei from each other in the binary image created from the delta image.
+However, we do not see a significant difference between the original grayscale image and the delta image after thresholding.
