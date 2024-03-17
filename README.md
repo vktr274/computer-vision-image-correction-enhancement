@@ -183,7 +183,7 @@ The following are the original grayscale image and the delta image:
 
 We can see higher contrast between the nuclei and the background in the delta image.
 
-Next we used a Gaussian filter with a kernel size of 7 and $\sigma = 0$ to smooth both the original grayscale image and the delta image. After that we performed Otsu's thresholding on the smoothed images and compared the results.
+Next we used a Gaussian filter with a kernel size of 7 and $\sigma = 0$ to blur both the original grayscale image and the delta image. After that we performed Otsu's thresholding on the blurred images and compared the results.
 
 ![Original Grayscale and Delta Image Thresholding](images/orig_vs_delta_otsu.png)
 
