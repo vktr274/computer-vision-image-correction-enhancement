@@ -166,15 +166,11 @@ The following image shows the mask and selected nucleus area in RGB for visualiz
 Then we calculated the mean L, a, and b values of the Lab color space in the selected area where the mask contains ones. Then we created a grayscale delta image where each pixel value is `delta_E = np.sqrt(delta_L**2 + delta_a**2 + delta_b**2)`. The following code was used to calculate the delta image:
 
 ```python
-delta_lab = np.zeros((lab_img.shape[0], lab_img.shape[1]), dtype=np.uint8)
+delta_L = lab_img[:,:,0] - L_mean_nucleus
+delta_a = lab_img[:,:,1] - a_mean_nucleus
+delta_b = lab_img[:,:,2] - b_mean_nucleus
 
-for i in range(lab_img.shape[0]):
-    for j in range(lab_img.shape[1]):
-        delta_L = lab_img[i,j,0] - L_mean_nucleus
-        delta_a = lab_img[i,j,1] - a_mean_nucleus
-        delta_b = lab_img[i,j,2] - b_mean_nucleus
-        delta_E = np.sqrt(delta_L**2 + delta_a**2 + delta_b**2)
-        delta_lab[i,j] = delta_E
+delta_lab = np.sqrt(delta_L**2 + delta_a**2 + delta_b**2).astype(np.uint8)
 ```
 
 The following are the original grayscale image and the delta image:
@@ -183,7 +179,11 @@ The following are the original grayscale image and the delta image:
 
 We can see higher contrast between the nuclei and the background in the delta image.
 
-Next we used a Gaussian filter with a kernel size of 7 and $\sigma = 0$ to blur both the original grayscale image and the delta image. After that we performed Otsu's thresholding on the blurred images and compared the results.
+Next we used a Gaussian filter with a kernel size of 7 and $\sigma = 0$ to blur both the original grayscale image and the delta image.
+
+![Blurred Grayscale and Delta Image](images/orig_vs_delta_blurred.png)
+
+After that we performed Otsu's thresholding on the blurred images and compared the results.
 
 ![Original Grayscale and Delta Image Thresholding](images/orig_vs_delta_otsu.png)
 
