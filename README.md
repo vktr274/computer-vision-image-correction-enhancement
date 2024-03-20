@@ -187,4 +187,4 @@ After that we performed Otsu's thresholding on the blurred images and compared t
 
 ![Original Grayscale and Delta Image Thresholding](images/orig_vs_delta_otsu.png)
 
-We do not see a significant change between the original grayscale image and the delta image after thresholding. However, the darker and lighter nuclei than the one we calculated means from are captured worse in the delta image.
+We do not see a significant improving change between the original grayscale image and the delta image after thresholding. However, the darker and lighter nuclei than the one we calculated means from are captured worse in the delta image.
